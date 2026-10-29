@@ -1,0 +1,4 @@
+.agent.json
+.env
+node_modules/
+*.log

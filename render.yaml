@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: beyond-control
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.19.0
+      - key: CONTROL_ACCESS_KEY
+        generateValue: true
+      - key: DEVICE_TOKEN
+        generateValue: true

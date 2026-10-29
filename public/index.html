@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08111c">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Beyond · Control del avatar</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="brand">
+      <span class="brand-mark" aria-hidden="true">B<span>›</span></span>
+      <div><span class="brand-name">BEYOND</span><span class="brand-subtitle">CONTROL DEL AVATAR</span></div>
+      <button id="logout" class="text-button" hidden>Salir</button>
+    </header>
+
+    <section id="login" class="login-view">
+      <p class="eyebrow">BIENVENIDOS AL FUTURO</p>
+      <h1>La experiencia<br>comienza contigo<span>.</span></h1>
+      <p class="intro">Recibe a tus visitas y presenta Beyond desde tu celular.</p>
+      <form id="login-form" class="card login-card">
+        <label for="access-key">Clave de acceso</label>
+        <input id="access-key" name="password" type="password" autocomplete="current-password" required maxlength="256" placeholder="Escribe tu clave">
+        <button id="login-button" type="submit" class="button primary">Entrar al control <span aria-hidden="true">↗</span></button>
+        <p id="login-message" class="form-message" role="status"></p>
+      </form>
+      <div class="access-note"><span class="small-orbit" aria-hidden="true"></span> Un solo lugar para dar vida a la visita.</div>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="page-heading"><p class="eyebrow">EXPERIENCIA BEYOND</p><h1>Listos para<br>recibir visitas<span>.</span></h1></div>
+      <section class="card status-card" aria-live="polite">
+        <div class="status-top"><span class="status-label">ESTADO DEL TÓTEM</span><span id="connection-pill" class="pill">Consultando</span></div>
+        <div class="status-body"><span id="status-orbit" class="status-orbit" aria-hidden="true"></span><div><h2 id="state-title">Conectando con el tótem</h2><p id="state-description">Comprobando si el avatar está disponible.</p></div></div>
+      </section>
+
+      <div class="actions">
+        <button id="presentation" class="button primary action-main" disabled><span class="action-icon" aria-hidden="true">↗</span><span><strong>Recibir visita</strong><small>Saludo y presentación de Beyond</small></span><span class="arrow" aria-hidden="true">→</span></button>
+        <div class="secondary-actions">
+          <button id="welcome" class="button secondary" disabled><span aria-hidden="true">✦</span> Solo bienvenida</button>
+          <button id="stop" class="button stop" disabled><span aria-hidden="true">■</span> Detener</button>
+        </div>
+      </div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
+      <p class="device-note">El equipo del tótem debe permanecer encendido, con el avatar abierto y conectado a internet.</p>
+    </section>
+    <footer>INNOVACIÓN EN SEGURIDAD <span aria-hidden="true">/</span> BEYOND</footer>
+  </main>
+</body>
+</html>
