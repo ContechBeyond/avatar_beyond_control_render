@@ -38,11 +38,29 @@
       </section>
 
       <div class="actions">
-        <button id="presentation" class="button primary action-main" disabled><span class="action-icon" aria-hidden="true">↗</span><span><strong>Recibir visita</strong><small>Saludo y presentación de Beyond</small></span><span class="arrow" aria-hidden="true">→</span></button>
+        <section class="card tour-controls">
+          <label for="route">Recorrido de la visita</label>
+          <select id="route"><option value="brief">Breve · bienvenida y cierre</option><option value="executive" selected>Ejecutivo · temas 1, 2, 3 y cierre</option><option value="full">Completo · los ocho temas</option></select>
+          <label class="check-label"><input id="guided" type="checkbox"> Esperar mi indicación entre temas</label>
+        </section>
+        <button id="presentation" class="button primary action-main" disabled><span class="action-icon" aria-hidden="true">↗</span><span><strong>Recibir visita</strong><small id="route-description">Recorrido ejecutivo del showroom</small></span><span class="arrow" aria-hidden="true">→</span></button>
         <div class="secondary-actions">
           <button id="welcome" class="button secondary" disabled><span aria-hidden="true">✦</span> Solo bienvenida</button>
+          <button id="continue" class="button secondary" disabled><span aria-hidden="true">→</span> Continuar</button>
+          <button id="closing" class="button secondary" disabled><span aria-hidden="true">↗</span> Pasar al SOC</button>
           <button id="stop" class="button stop" disabled><span aria-hidden="true">■</span> Detener</button>
         </div>
+        <details class="card topic-controls"><summary>Elegir un tema</summary>
+          <label for="topic">Reproducir un tema del showroom</label>
+          <select id="topic">
+            <option value="1">1 · Bienvenida y concepto Beyond</option><option value="2">2 · El SOC como cerebro de la operación</option>
+            <option value="3">3 · Accesos y llaves con trazabilidad</option><option value="4">4 · Video inteligente, drones y robótica</option>
+            <option value="5">5 · Protección de unidades y mercancías en ruta</option><option value="6">6 · Personas y respuesta coordinada</option>
+            <option value="7">7 · Kits Beyond y valor para cada cliente</option><option value="8">8 · Invitación a conocer el SOC</option>
+          </select>
+          <button id="play-topic" class="button secondary" disabled>Reproducir tema</button>
+          <p>Al terminar este tema, el avatar esperará una nueva indicación.</p>
+        </details>
       </div>
       <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
 

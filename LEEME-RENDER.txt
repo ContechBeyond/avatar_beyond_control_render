@@ -1,58 +1,27 @@
-BEYOND - PUBLICAR EL CONTROL EN RENDER
+BEYOND - ACTUALIZAR EL PANEL EXISTENTE EN RENDER
 
-Este paquete contiene la pagina de control y su servidor para Render.
-El avatar y los audios permanecen en la computadora donde funciona Unity.
+Este paquete agrega los recorridos del showroom y sus ocho temas.
+Usa el mismo servicio, URL, CONTROL_ACCESS_KEY y DEVICE_TOKEN que ya tienes.
 
-1. SUBIR A GITHUB
-- Extrae el ZIP.
-- Crea un repositorio privado en GitHub llamado beyond-control. Marca Add a README file.
-- Dentro del repositorio: Add file > Upload files.
-- Arrastra el CONTENIDO de esta carpeta, incluyendo public, y guarda los cambios en main.
-- Debes ver server.js, render.yaml y package.json directamente al abrir el repositorio.
-- Sube los archivos extraidos, no el ZIP ni la carpeta que los contiene.
+1. Extrae el ZIP.
+2. En GitHub abre el MISMO repositorio que esta conectado a tu servicio de Render.
+3. En Add file > Upload files sube el contenido extraido y guarda los cambios.
+   server.js, commands.js y render.yaml deben quedar en la raiz del repositorio,
+   junto con package.json, package-lock.json y la carpeta public.
+4. Espera a que Render publique el ultimo cambio. Si no lo hace automaticamente,
+   abre el servicio y usa Manual Deploy > Deploy latest commit.
+5. Espera a que aparezca Live y recarga la pagina en el celular.
 
-2. PUBLICAR EN RENDER
-- Abre https://dashboard.render.com y elige New > Blueprint.
-- Conecta tu cuenta de GitHub si lo solicita y selecciona beyond-control.
-- Rama: main. Blueprint Path: render.yaml. Nombre: beyond-control.
-- Revisa que el servicio tenga plan Free y pulsa Deploy Blueprint.
-- La configuracion incluida ya indica como instalar e iniciar el panel.
-- Cuando el servicio quede Live, copia su direccion HTTPS terminada en .onrender.com.
-- Usa la direccion real que Render te asigne; no esta decidida de antemano.
+Recibir visita utiliza Ejecutivo por defecto: temas 1, 2, 3 y cierre.
+Puedes seleccionar Breve, Ejecutivo o Completo.
+Continuar salta al siguiente tema del recorrido.
+Elegir tema reproduce un bloque independiente.
+Pasar al SOC interrumpe cualquier bloque y reproduce el cierre.
+La casilla Esperar mi indicacion entre temas permite una visita guiada.
 
-3. IDENTIFICAR LAS DOS CLAVES
-- Abre el servicio beyond-control y entra en Environment.
-- CONTROL_ACCESS_KEY: es la clave para iniciar sesion desde el celular.
-- DEVICE_TOKEN: es la clave para enlazar la computadora del avatar.
-- Render genera ambas automaticamente al crear este servicio.
-- Conserva las claves de forma privada; no las agregues al repositorio.
+Estos controles requieren el nuevo Beyond Avatar.exe del showroom.
+No crees otro servicio ni reemplaces las claves existentes para esta actualizacion.
+Los archivos de configuracion privada de cada PC no van dentro de este paquete.
 
-4. ENLAZAR LA COMPUTADORA DEL AVATAR (UNA VEZ)
-En C:\Users\MONITOREO 2\Downloads\ServerPanelNode:
-- Abre CONFIGURAR-REMOTO.cmd.
-- Pega la direccion HTTPS del servicio de Render y pulsa Enter.
-- Pega el valor completo de DEVICE_TOKEN y pulsa Enter.
-- La clave se oculta al escribir y se guarda solo en esta computadora.
-
-5. USAR EL PANEL
-- Abre INICIAR-REMOTO.cmd en la computadora del avatar y deja esa ventana abierta.
-- Abre la escena SpeakAvatarDataBase en Unity y pulsa Play, o ejecuta la aplicacion del avatar ya preparada.
-- El equipo debe permanecer encendido y con internet.
-- En el celular abre la direccion de Render e inicia sesion con CONTROL_ACCESS_KEY.
-- Cuando el panel indique que el avatar esta conectado y listo, pulsa Recibir visita.
-- Solo bienvenida reproduce el saludo; Detener interrumpe la presentacion.
-- El celular puede usar datos moviles o cualquier otra red. No requiere VPN ni abrir puertos.
-- Sin INICIAR-REMOTO.cmd y el avatar funcionando, el panel mostrara el equipo desconectado.
-- En los siguientes usos solo repite este paso 5.
-
-PLAN GRATUITO
-Render puede poner el servicio en reposo tras 15 minutos sin recibir trafico.
-La siguiente apertura puede tardar aproximadamente un minuto en cargar.
-Este paquete configura una sola instancia Free, sin base de datos.
-
-Documentacion oficial consultada:
-https://render.com/docs/infrastructure-as-code
-https://render.com/docs/configure-environment-variables
-https://render.com/docs/blueprint-spec
-https://render.com/docs/free
-https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository
+Guia oficial de publicacion:
+https://render.com/docs/deploys#manual-deploys

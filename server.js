@@ -1,6 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+const { normalizeCommand, canInterrupt } = require('./commands');
 const { randomBytes, randomUUID, createHash, timingSafeEqual } = require('node:crypto');
 
 const STATES = new Set(['IDLE', 'WELCOME', 'PRESENTATION', 'FAREWELL', 'RETURN_TO_IDLE']);
@@ -78,7 +79,13 @@ function createControlServer(options = {}) {
             connected: status?.connected === true,
             fresh: status?.fresh === true,
             avatar: avatar && avatar.protocol === 1 && STATES.has(avatar.state) ? {
-                state: avatar.state, ready: avatar.ready === true, canStart: avatar.canStart === true
+                state: avatar.state, ready: avatar.ready === true, canStart: avatar.canStart === true,
+                showroomVersion: avatar.showroomVersion === 2 ? 2 : 1,
+                topic: Number.isInteger(avatar.topic) && avatar.topic >= 1 && avatar.topic <= 8 ? avatar.topic : 0,
+                paragraph: Number.isInteger(avatar.paragraph) && avatar.paragraph >= 0 && avatar.paragraph <= 20 ? avatar.paragraph : 0,
+                route: ['brief', 'executive', 'full', 'topic'].includes(avatar.route) ? avatar.route : 'executive',
+                waitingForContinue: avatar.waitingForContinue === true, canContinue: avatar.canContinue === true,
+                gesture: typeof avatar.gesture === 'string' && /^(NeutralIdle|Beyond[A-Za-z]{1,24})$/.test(avatar.gesture) ? avatar.gesture : 'NeutralIdle'
             } : null
         };
     }
@@ -181,21 +188,24 @@ function createControlServer(options = {}) {
                 }
                 if (req.method === 'POST' && url.pathname === '/api/commands') {
                     const body = await readJson(req);
-                    const { action } = body;
-                    if (!['presentacion', 'saludo', 'detener'].includes(action))
+                    const command = normalizeCommand(body);
+                    if (!command)
                         return send(res, 400, { error: 'Acción no disponible.' });
+                    const { action } = command;
                     const state = snapshot();
                     if (!state.connected || !state.avatar?.ready)
                         return send(res, 503, { error: 'El tótem está desconectado o todavía no está listo.' });
-                    if (pending.size >= 8 || (pending.size && action !== 'detener'))
+                    if (pending.size >= 8 || (pending.size && !canInterrupt(action)))
                         return send(res, 409, { error: 'Hay una acción en curso. Espera su confirmación.' });
                     if (['saludo', 'presentacion'].includes(action) && !state.avatar.canStart)
                         return send(res, 409, { error: 'El avatar está hablando. Espera a que termine o pulsa Detener.' });
+                    if (action === 'continuar' && !state.avatar.canContinue)
+                        return send(res, 409, { error: 'Este tema es el último del recorrido. Puedes elegir otro tema o pasar al SOC.' });
                     const id = randomUUID();
                     const outcome = await new Promise(resolve => {
                         const timer = setTimeout(() => finish(id, 504, { accepted: false, error: 'No llegó la confirmación del tótem. Revisa su estado antes de volver a intentar.' }), commandTTL);
                         pending.set(id, { resolve, timer, assignedTo: null });
-                        queue.push({ id, action, expiresAt: Date.now() + commandTTL });
+                        queue.push({ id, ...command, expiresAt: Date.now() + commandTTL });
                         res.on('close', () => {
                             if (!res.writableEnded) finish(id, 499, { accepted: false });
                         });
